@@ -21,18 +21,22 @@ input = ["L68",
 #input = [int(i) for i in open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()]
 
 # input complete lines
-#input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
+input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
 
 def solve1():
     pos = 50
-    zeros = 0
+    zeros1 = 0
+    zeros2 = 0
     for (d,i) in [(l[:1], int(l[1:])) for l in input]:
         pos += i if d == 'R' else -i
-        if (pos > 99): pos = pos - 100
-        if (pos < 0): pos = 100 + pos
-        if (pos == 0): zeros += 1
+        if (pos > 99) | (pos < 0): 
+            zeros2 += abs(pos // 100)
+            pos = pos % 100
+        
+        if (pos == 0): zeros1 += 1
         #print(i if d == 'R' else -i, pos)
-    print("Deel 1: " + str(zeros))
+    print("Deel 1: " + str(zeros1))
+    print("Deel 2: " + str(zeros2))
 
 def solve2():
     print("Deel 2: No")
