@@ -26,20 +26,41 @@ input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().sp
 def solve1():
     pos = 50
     zeros1 = 0
-    zeros2 = 0
     for (d,i) in [(l[:1], int(l[1:])) for l in input]:
+
         pos += i if d == 'R' else -i
-        if (pos > 99) | (pos < 0): 
-            zeros2 += abs(pos // 100)
-            pos = pos % 100
-        
+
+        pos = abs(pos % 100)
+
         if (pos == 0): zeros1 += 1
-        #print(i if d == 'R' else -i, pos)
+
     print("Deel 1: " + str(zeros1))
-    print("Deel 2: " + str(zeros2))
 
 def solve2():
-    print("Deel 2: No")
+    pos = 50
+
+    zeros2 = 0
+    for (d,i) in [(l[:1], int(l[1:])) for l in input]:
+        if d == 'R':
+            pos += i
+            zeros2 += pos // 100
+        else:
+#            if (i >= pos): 
+#                cycles = i // 100
+#                zeros2 += (cycles + 1)
+#                pos -= i % 100
+#            else:
+#                pos -= i
+            prev = pos
+            pos -= i
+            if pos <= 0:
+                zeros2 += pos // -100 + 1
+                if prev == 0:
+                    zeros2 -= 1
+        pos = pos % 100
+
+#        print(pos, d, i, zeros2)
+    print("Deel 2: " + str(zeros2))
 
 start = datetime.datetime.now()
 solve1()
@@ -48,3 +69,4 @@ print("Tijd voor oplossing 1: ", datetime.datetime.now()-start)
 start = datetime.datetime.now()
 solve2()
 print("Tijd voor oplossing 2: ", datetime.datetime.now()-start)
+
