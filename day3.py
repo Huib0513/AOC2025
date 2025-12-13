@@ -45,9 +45,13 @@ def solve2():
     start = 0
     digit = 0
     for bank in input:
+        start = 0
+        digit = 0
         resultstring = ''
         for l in range(length,0,-1):
-            digit, start = find_highest(bank[start:len(bank)-start-l])
+            bankrest = bank[start:len(bank)-start-l]
+            print('Looking for remaining ' + str(l) + ' digits in ' + bankrest)
+            digit, start = find_highest(bankrest)
             resultstring += str(digit)
             start += 1
         print(bank, resultstring)
