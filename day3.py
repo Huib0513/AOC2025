@@ -9,7 +9,7 @@ input = ["987654321111111",
 "818181911112111"]
 
 # input complete lines
-#input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
+input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
 
 def solve1():
     result = 0
@@ -39,30 +39,31 @@ def find_highest(bank):
     return max, maxindex
 
 
-def solve2():
-    result = -1
-    length = 2
+def solve(patternlength: int):
+    result = 0
+    #patternlength = 2
     start = 0
     digit = 0
     for bank in input:
         start = 0
         digit = 0
         resultstring = ''
-        for l in range(length,0,-1):
-            bankrest = bank[start:len(bank)-start-l]
-            print('Looking for remaining ' + str(l) + ' digits in ' + bankrest)
-            digit, start = find_highest(bankrest)
+        for l in range(patternlength,0,-1):
+            bankrest = bank[start:len(bank)-(l-1)]
+            #print('Looking for remaining ' + str(l) + ' digits in ' + bankrest)
+            digit, newstart = find_highest(bankrest)
             resultstring += str(digit)
-            start += 1
-        print(bank, resultstring)
+            start += newstart + 1
+        #print(bank, resultstring)
+        result += int(resultstring)
  
-    print("Deel 2: " + str(result))
+    print("Deel X: " + str(result))
 
 starttime = datetime.datetime.now()
-solve1()
+solve(2)
 print("Tijd voor oplossing 1: ", datetime.datetime.now()-starttime)
 
 starttime = datetime.datetime.now()
-solve2()
+solve(12)
 print("Tijd voor oplossing 2: ", datetime.datetime.now()-starttime)
 
