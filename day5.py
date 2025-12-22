@@ -38,6 +38,7 @@ def solve1():
 
 def solve2():
     result = 0
+    #Using a dict is really stupid, as it will not allow duplicate keys (and some ranges have the same starting position...)
     fresh_stuff = {}
 
     for line in input:
