@@ -38,18 +38,23 @@ def solve1():
 
 def solve2():
     result = 0
-    #Using a dict is really stupid, as it will not allow duplicate keys (and some ranges have the same starting position...)
+    #Using a dict is a really bad idea, as it will not allow duplicate keys (and some ranges have the same starting position...)
     fresh_stuff = {}
 
     for line in input:
         if len(line) == 0:
             break
-        fresh_stuff[line.split('-')[0]] = (int(line.split('-')[0]),int(line.split('-')[1])+1)
+        start, end = int(line.split('-')[0]), int(line.split('-')[1])
+        if (start in fresh_stuff):
+            if (end > fresh_stuff[start][1]):
+                fresh_stuff[start] = (start,end)
+        else:
+            fresh_stuff[start] = (int(line.split('-')[0]),int(line.split('-')[1]))
     
     startjes = sorted([int(f) for f in fresh_stuff.keys()])
 #    print(startjes)
     currentstart = startjes[0]
-    currentend = fresh_stuff[str(startjes[0])][1]
+    currentend = fresh_stuff[startjes[0]][1]
     for i in range(len(startjes)):
 #        print(startjes[i])
         # Take the first range
@@ -63,10 +68,10 @@ def solve2():
         if (startjes[i+1] > currentend):
             result += (currentend - currentstart) + 1
             currentstart = startjes[i+1]
-            currentend = fresh_stuff[str(startjes[i+1])][1]
+            currentend = fresh_stuff[startjes[i+1]][1]
         else:
-            if (fresh_stuff[str(startjes[i+1])][1] > currentend):
-                currentend = fresh_stuff[str(startjes[i+1])][1]
+            if (fresh_stuff[startjes[i+1]][1] > currentend):
+                currentend = fresh_stuff[startjes[i+1]][1]
 
 
  
